@@ -26,7 +26,7 @@
 .display p {
   margin: 1vh;
   color: white;
-  font-size: 12vh;
+  font-size: 8vh;
 }
 
 button {
@@ -49,14 +49,20 @@ button.operator {
   background-color: orange;
 }
 
+button:active {
+  filter: brightness(120%);
+}
+
+button.operator-active {
+  font-size: 6vh;
+  background-color: white;
+  color: orange;
+}
+
 .zero {
   grid-column-end: span 2;
   aspect-ratio: auto;
   border-radius: 10vh;
-  text-align: left; 
-}
-
-.zero p {
-  position: relative;
-  left: 4vh;
+  text-align: left;
+  padding-left: 4vh;
 }

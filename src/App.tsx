@@ -1,36 +1,182 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect } from 'react'
+import performCalc from './utils/helper-functions'
+import './App.css'
 
 function App() {
+  const [liveDisplay, setLiveDisplay] = useState('')
+  const [formulaDisplay, setFormulaDisplay] = useState('')
+  const [inputComplete, setInputComplete] = useState(false)
+  const [operatorActive, setOperatorActive] = useState('')
+  const [allClear, setAllClear] = useState(true)
+
+  useEffect(() => {
+    finishCalc()
+  }, [inputComplete])
+
+  const insertOperator = (event: any) => {
+    setOperatorActive(event.target.value)
+
+    if (!inputComplete) {
+      if (liveDisplay !== '') {
+        setFormulaDisplay((currentFormula) => {
+          if (event.target.value !== '=') {
+            return currentFormula + liveDisplay + event.target.value
+          } else {
+            setInputComplete(true)
+            return currentFormula + liveDisplay
+          }
+        })
+      }
+    }
+  }
+
+  const plusMinusToggle = () => {
+    if (liveDisplay.startsWith('-')) {
+      setLiveDisplay((curr) => curr.slice(1))
+    } else if (!liveDisplay.startsWith('-')) {
+      setLiveDisplay((curr) => `-${curr}`)
+    }
+  }
+
+  const insertNum = (event: any): void => {
+    setOperatorActive('')
+    setAllClear(false)
+    if (!inputComplete) {
+      if (formulaDisplay.endsWith(' ')) setLiveDisplay('')
+      if (liveDisplay.length < 9) {
+        setLiveDisplay((currentNum) => {
+          return currentNum + event.target.value
+        })
+      }
+    }
+  }
+
+  const insertDecimal = (event: any): void => {
+    setLiveDisplay((currentNum) => {
+      if (/\./.test(liveDisplay)) {
+        return currentNum
+      } else {
+        return currentNum + event.target.value
+      }
+    })
+  }
+
+  const finishCalc = () => {
+    let answer = performCalc(formulaDisplay)
+    setLiveDisplay(answer)
+  }
+
+  const clearDisplay = (event: any) => {
+    if (event.target.value === 'AC' || inputComplete) {
+      setFormulaDisplay('')
+    }
+    setLiveDisplay('')
+    setAllClear(true)
+    setInputComplete(false)
+  }
+
   return (
     <div className="App">
       <div className="display">
-        <p>0</p>
+        <p>{formatDisplay(liveDisplay)}</p>
       </div>
-      <button className="top-row">AC</button>
-      <button className="top-row">+/-</button>
-      <button className="top-row">%</button>
-      <button className="operator">÷</button>
-      <button>7</button>
-      <button>8</button>
-      <button>9</button>
-      <button className="operator">×</button>
-      <button>4</button>
-      <button>5</button>
-      <button>6</button>
-      <button className="operator">-</button>
-      <button>1</button>
-      <button>2</button>
-      <button>3</button>
-      <button className="operator">+</button>
-      <button className="zero">
-        <p>0</p>
+      <button
+        className="top-row"
+        onClick={clearDisplay}
+        value={allClear ? 'AC' : 'C'}
+      >
+        {allClear ? 'AC' : 'C'}
       </button>
-      <button>.</button>
-      <button className="operator">=</button>
+      <button className="top-row" onClick={plusMinusToggle} value="-">
+        +/-
+      </button>
+      <button className="top-row">%</button>
+      <button
+        className={operatorActive === ' ÷ ' ? 'operator-active' : 'operator'}
+        onClick={insertOperator}
+        value=" ÷ "
+      >
+        ÷
+      </button>
+      <button onClick={insertNum} value="7">
+        7
+      </button>
+      <button onClick={insertNum} value="8">
+        8
+      </button>
+      <button onClick={insertNum} value="9">
+        9
+      </button>
+      <button
+        className={operatorActive === ' x ' ? 'operator-active' : 'operator'}
+        onClick={insertOperator}
+        value=" x "
+      >
+        ×
+      </button>
+      <button onClick={insertNum} value="4">
+        4
+      </button>
+      <button onClick={insertNum} value="5">
+        5
+      </button>
+      <button onClick={insertNum} value="6">
+        6
+      </button>
+      <button
+        className={operatorActive === ' - ' ? 'operator-active' : 'operator'}
+        onClick={insertOperator}
+        value=" - "
+      >
+        -
+      </button>
+      <button onClick={insertNum} value="1">
+        1
+      </button>
+      <button onClick={insertNum} value="2">
+        2
+      </button>
+      <button onClick={insertNum} value="3">
+        3
+      </button>
+      <button
+        className={operatorActive === ' + ' ? 'operator-active' : 'operator'}
+        onClick={insertOperator}
+        value=" + "
+      >
+        +
+      </button>
+      <button className="zero" onClick={insertNum} value="0">
+        0
+      </button>
+      <button onClick={insertDecimal} value=".">
+        .
+      </button>
+      <button className="operator" onClick={insertOperator} value="=">
+        =
+      </button>
     </div>
   )
 }
 
-export default App;
+export default App
+
+const formatDisplay = (str: string): string => {
+  let [int, dec] = str.split('.')
+  if (dec === undefined) dec = '.'
+
+  let numArr: string[] = int
+    .split('')
+    .filter((num) => num !== ',')
+    .reverse()
+    .map((num, i) => {
+      if (i % 3 === 0 && i !== 0 && num !== '-') {
+        return `${num},`
+      }
+      return num
+    })
+
+  return /\./.test(str)
+    ? numArr.reverse().join('') + `.${dec}`
+    : numArr.reverse().join('')
+}
