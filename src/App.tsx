@@ -1,53 +1,41 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import performCalc from './utils/helper-functions'
 import './App.css'
 
 function App() {
-  const [liveDisplay, setLiveDisplay] = useState('')
+  const [liveDisplay, setLiveDisplay] = useState('0')
   const [formulaDisplay, setFormulaDisplay] = useState('')
-  const [inputComplete, setInputComplete] = useState(false)
+  const [lastInput, setLastInput] = useState('')
   const [operatorActive, setOperatorActive] = useState('')
   const [allClear, setAllClear] = useState(true)
-
-  useEffect(() => {
-    finishCalc()
-  }, [inputComplete])
 
   const insertOperator = (event: any) => {
     setOperatorActive(event.target.value)
 
-    if (!inputComplete) {
-      if (liveDisplay !== '') {
-        setFormulaDisplay((currentFormula) => {
-          if (event.target.value !== '=') {
-            return currentFormula + liveDisplay + event.target.value
-          } else {
-            setInputComplete(true)
-            return currentFormula + liveDisplay
-          }
-        })
-      }
+    if (liveDisplay !== '') {
+      setFormulaDisplay((currentFormula) => {
+        return currentFormula + liveDisplay + event.target.value
+      })
     }
   }
 
   const plusMinusToggle = () => {
     if (liveDisplay.startsWith('-')) {
       setLiveDisplay((curr) => curr.slice(1))
-    } else if (!liveDisplay.startsWith('-')) {
+    } else {
       setLiveDisplay((curr) => `-${curr}`)
     }
   }
 
   const insertNum = (event: any): void => {
+    if (operatorActive !== '' || liveDisplay === '0') setLiveDisplay('')
     setOperatorActive('')
     setAllClear(false)
-    if (!inputComplete) {
-      if (formulaDisplay.endsWith(' ')) setLiveDisplay('')
-      if (liveDisplay.length < 9) {
-        setLiveDisplay((currentNum) => {
-          return currentNum + event.target.value
-        })
-      }
+
+    if (liveDisplay.length < 9) {
+      setLiveDisplay((currentNum) => {
+        return currentNum + event.target.value
+      })
     }
   }
 
@@ -62,17 +50,21 @@ function App() {
   }
 
   const finishCalc = () => {
-    let answer = performCalc(formulaDisplay)
+    let answer: string
+    if (formulaDisplay === '') {
+      answer = performCalc(liveDisplay + lastInput)
+    } else {
+      setLastInput(formulaDisplay.slice(-3) + liveDisplay)
+      answer = performCalc(formulaDisplay + liveDisplay)
+    }
+    setFormulaDisplay('')
     setLiveDisplay(answer)
   }
 
   const clearDisplay = (event: any) => {
-    if (event.target.value === 'AC' || inputComplete) {
-      setFormulaDisplay('')
-    }
-    setLiveDisplay('')
+    if (event.target.value === 'AC') setFormulaDisplay('')
+    setLiveDisplay('0')
     setAllClear(true)
-    setInputComplete(false)
   }
 
   return (
@@ -152,7 +144,7 @@ function App() {
       <button onClick={insertDecimal} value=".">
         .
       </button>
-      <button className="operator" onClick={insertOperator} value="=">
+      <button className="operator" onClick={finishCalc} value="=">
         =
       </button>
     </div>
