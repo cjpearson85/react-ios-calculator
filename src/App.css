@@ -6,8 +6,17 @@
 }
 
 .App {
-  aspect-ratio: 9 / 16;
+  width: 100vw;
   height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+}
+
+.calc-container {
+  aspect-ratio: 9 / 16;
+  height: 100%;
   background-color: black;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -65,4 +74,15 @@ button.operator-active {
   border-radius: 10vh;
   text-align: left;
   padding-left: 4vh;
+}
+
+#minus {
+  padding-bottom: 0.8vh;
+}
+
+@media (max-aspect-ratio: 9/16) {
+  .calc-container {
+    width: 100%;
+    height: auto;
+  }
 }
