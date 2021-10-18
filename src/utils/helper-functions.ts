@@ -42,7 +42,7 @@ function accurateCalc(
   return result
 }
 
-const performCalc = (str: string): string => {
+export const performCalc = (str: string): string => {
   const arr = str.split(' ')
 
   if (arr.length === 1) {
@@ -92,4 +92,46 @@ const performCalc = (str: string): string => {
   return 'err'
 }
 
-export default performCalc
+export const formatDisplay = (str: string): string => {
+  let result: string = str
+
+  if (str.includes('e')) {
+    result = str.replace('+', '')
+    if (result.length > 9) {
+      let [foreNum, zeroes] = result.split('e')
+      result = foreNum.slice(0, 9 - zeroes.length) + 'e' + zeroes
+    }
+  } else if (str.length > 9) {
+    let [int, dec] = str.split('.')
+    if (int.length > 9) {
+      let zeroes = int.length - 1
+      result = `${int[0]}.${int.slice(1, 8 - `${zeroes}`.length)}e${zeroes}`
+    } else if (int.length === 9) {
+      result = int
+    } else {
+      result = `${int}.${dec.slice(0, 9 - int.length)}`
+    }
+  }
+
+  let [int, dec] = result.split('.')
+  if (dec === undefined) dec = '.'
+
+  let numArr: string[] = int
+    .split('')
+    .filter((num) => num !== ',')
+    .reverse()
+    .map((num, i) => {
+      if (i % 3 === 0 && i !== 0 && num !== '-') {
+        return `${num},`
+      }
+      return num
+    })
+
+  if (/\./.test(result)) {
+    result = numArr.reverse().join('') + `.${dec}`
+  } else {
+    result = numArr.reverse().join('')
+  }
+
+  return result
+}

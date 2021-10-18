@@ -1,9 +1,9 @@
 import { useState } from 'react'
-import performCalc from './utils/helper-functions'
+import { performCalc, formatDisplay } from './utils/helper-functions'
 import './App.css'
 
 function App() {
-  const [liveDisplay, setLiveDisplay] = useState('0')
+  const [liveDisplay, setLiveDisplay] = useState('')
   const [formulaDisplay, setFormulaDisplay] = useState('')
   const [lastInput, setLastInput] = useState('')
   const [operatorActive, setOperatorActive] = useState('')
@@ -28,15 +28,17 @@ function App() {
   }
 
   const insertNum = (event: any): void => {
-    if (operatorActive !== '' || liveDisplay === '0') setLiveDisplay('')
-    setOperatorActive('')
-    setAllClear(false)
-
-    if (liveDisplay.length < 9) {
-      setLiveDisplay((currentNum) => {
-        return currentNum + event.target.value
-      })
+    if (operatorActive !== '') {
+      setLiveDisplay(event.target.value)
+      setOperatorActive('')
+    } else {
+      if (liveDisplay.length < 9) {
+        setLiveDisplay((currentNum) => {
+          return currentNum + event.target.value
+        })
+      }
     }
+    setAllClear(false)
   }
 
   const insertDecimal = (event: any): void => {
@@ -63,7 +65,7 @@ function App() {
 
   const clearDisplay = (event: any) => {
     if (event.target.value === 'AC') setFormulaDisplay('')
-    setLiveDisplay('0')
+    setLiveDisplay('')
     setAllClear(true)
   }
 
@@ -71,7 +73,13 @@ function App() {
     <div className="App">
       <div className="calc-container">
         <div className="display">
-          <p>{formatDisplay(liveDisplay)}</p>
+          <p>
+            {liveDisplay === ''
+              ? '0'
+              : liveDisplay === '-'
+              ? '-0'
+              : formatDisplay(liveDisplay)}
+          </p>
         </div>
         <button
           className="top-row"
@@ -155,23 +163,3 @@ function App() {
 }
 
 export default App
-
-const formatDisplay = (str: string): string => {
-  let [int, dec] = str.split('.')
-  if (dec === undefined) dec = '.'
-
-  let numArr: string[] = int
-    .split('')
-    .filter((num) => num !== ',')
-    .reverse()
-    .map((num, i) => {
-      if (i % 3 === 0 && i !== 0 && num !== '-') {
-        return `${num},`
-      }
-      return num
-    })
-
-  return /\./.test(str)
-    ? numArr.reverse().join('') + `.${dec}`
-    : numArr.reverse().join('')
-}
