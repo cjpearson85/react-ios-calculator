@@ -1,4 +1,4 @@
-import performCalc from './helper-functions'
+import { performCalc } from './helper-functions'
 
 describe('performCalc()', () => {
   test('Simple multiplication', () => {
