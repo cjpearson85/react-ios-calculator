@@ -41,10 +41,26 @@ function App() {
     setAllClear(false)
   }
 
+  const insertZero = (event: any): void => {
+    if (operatorActive !== '') {
+      setLiveDisplay('')
+      setOperatorActive('')
+    } else {
+      if (liveDisplay !== '') {
+        setLiveDisplay((currentNum) => {
+          return currentNum + event.target.value
+        })
+      }
+    }
+  }
+
   const insertDecimal = (event: any): void => {
     setLiveDisplay((currentNum) => {
       if (/\./.test(liveDisplay)) {
         return currentNum
+      } else if (liveDisplay === '') {
+        setAllClear(false)
+        return 0 + event.target.value
       } else {
         return currentNum + event.target.value
       }
@@ -148,7 +164,7 @@ function App() {
         >
           +
         </button>
-        <button className="zero" onClick={insertNum} value="0">
+        <button className="zero" onClick={insertZero} value="0">
           0
         </button>
         <button onClick={insertDecimal} value=".">

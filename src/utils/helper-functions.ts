@@ -89,33 +89,37 @@ export const performCalc = (str: string): string => {
     return performCalc(arr.join(' '))
   }
 
-  return 'err'
+  return 'Error'
 }
 
 export const formatDisplay = (str: string): string => {
-  let result: string = str
+  if (str.includes('Infinity')) return str
 
-  if (str.includes('e')) {
-    result = str.replace('+', '')
+  const negative: boolean = str.startsWith('-')
+  let result: string = negative ? str.substr(1) : str
+
+  if (result.includes('e')) {
+    result = result.replace('+', '')
     if (result.length > 9) {
       let [foreNum, zeroes] = result.split('e')
-      result = foreNum.slice(0, 9 - zeroes.length) + 'e' + zeroes
+      result = Number(foreNum).toFixed(7 - zeroes.length) + 'e' + zeroes
     }
-  } else if (str.length > 9) {
-    let [int, dec] = str.split('.')
+  } else if (result.length > 9) {
+    let [int] = result.split('.')
     if (int.length > 9) {
-      let zeroes = int.length - 1
-      result = `${int[0]}.${int.slice(1, 8 - `${zeroes}`.length)}e${zeroes}`
+      let zeroes = (int.length - 1).toString()
+      result = (+int / 10 ** +zeroes).toFixed(7 - zeroes.length) + 'e' + zeroes
     } else if (int.length === 9) {
       result = int
     } else {
-      result = `${int}.${dec.slice(0, 9 - int.length)}`
+      result = Number(result).toFixed(9 - int.length)
     }
   }
 
+  // Split string for further formatting
   let [int, dec] = result.split('.')
-  if (dec === undefined) dec = '.'
 
+  // Insert comma separators into display integer string
   let numArr: string[] = int
     .split('')
     .filter((num) => num !== ',')
@@ -127,11 +131,13 @@ export const formatDisplay = (str: string): string => {
       return num
     })
 
+  // Reassemble string with decimals if needed
   if (/\./.test(result)) {
     result = numArr.reverse().join('') + `.${dec}`
   } else {
     result = numArr.reverse().join('')
   }
 
-  return result
+  // Return result with negative prefix if applicable
+  return negative ? `-${result}` : result
 }
