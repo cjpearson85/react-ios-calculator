@@ -1,5 +1,5 @@
 :root {
-  --scale-ratio: 0.68;
+  font-size: 9px;
 }
 
 * {
@@ -20,71 +20,73 @@
 }
 
 .head-container, .foot-container {
+  width: 80%;
+  margin: 0 auto;
   text-align: center;
   z-index: 2;
 }
 
-h1, h2 {
+h1 {
   color: white;
-  font-size: calc(3vh * var(--scale-ratio));
+  font-size: 1.5rem;
 }
 
 h2 {
-  font-size: calc(2.5vh * var(--scale-ratio));
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
   font-style: italic;
-  margin-bottom: calc(0.5vh * var(--scale-ratio));
 }
 
 a {
   color: white;
-  font-size: calc(2.5vh * var(--scale-ratio));
 }
 
 .logo-container {
-  margin-top: calc(1.5vh * var(--scale-ratio));
+  margin-top: 0.5rem;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 
 .logo {
-  height: calc(6vh * var(--scale-ratio));
+  height: 3rem;
   width: auto;
 }
 
 .App > img {
   position: absolute;
-  height: 76%;
-  filter: drop-shadow(0 0 10vh white);
+  height: 48rem;
+  width: auto;
+  -webkit-filter: drop-shadow(0 0 3rem white);
+  -moz-filter: drop-shadow(0 0 3rem white);
+  -ms-filter: drop-shadow(0 0 3rem white);
+  -o-filter: drop-shadow(0 0 3rem white);
+  filter: drop-shadow(0 0 3rem white);
 }
 
 .calc-container-outer {
-  padding: calc(2vh * var(--scale-ratio)) 0;
   position: relative;
-  bottom: calc(3vh * var(--scale-ratio));
-  right: calc(0.7vh * var(--scale-ratio));
-  border-radius: calc(4.8vh * var(--scale-ratio));
-  aspect-ratio: 9 / 19.5;
-  height: 68%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
+  bottom: 1.35rem;
+  right: 0.35rem;
+  border-radius: 2.3rem;
+  height: 43rem;
+  width: calc(20rem + 2px);
   background-color: black;
+  padding: 1rem 0;
   border: 1px solid rgba(255, 255, 255, 0.205)
 }
 
 .calc-container {
-  position: relative;
-  bottom: calc(2vh * var(--scale-ratio));
-  aspect-ratio: 9 / 16;
-  width: 100%;
+  height: 33rem;
+  width: 20rem;
   background-color: black;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr auto auto auto auto auto;
-  grid-gap: calc(2vh * var(--scale-ratio));
-  padding: calc(3vh * var(--scale-ratio));
+  grid-template-columns: 4rem 4rem 4rem 4rem;
+  grid-template-rows: auto 4rem 4rem 4rem 4rem 4rem;
+  grid-gap: 0.625rem;
+  padding: 1rem;
+  margin-bottom: 0.25rem;
 }
 
 .display {
@@ -95,29 +97,28 @@ a {
 }
 
 .display p {
-  margin: calc(1vh * var(--scale-ratio));
+  margin: 0.5rem;
   color: white;
 }
 
 .small {
-  font-size: calc(5.6vh * var(--scale-ratio));
+  font-size: 2.6em;
 }
 
 .medium {
-  font-size: calc(6.4vh * var(--scale-ratio));
+  font-size: 3rem;
 }
 
 .large {
-  font-size: calc(7.2vh * var(--scale-ratio));
+  font-size: 3.4rem;
 }
 
 .x-large {
-  font-size: calc(8vh * var(--scale-ratio));
+  font-size: 4rem;
 }
 
 button {
-  aspect-ratio: 1 / 1;
-  font-size: calc(4.5vh * var(--scale-ratio));
+  font-size: 2rem;
   background-color: gray;
   border: none;
   color: white;
@@ -125,18 +126,18 @@ button {
 }
 
 button:hover {
-  box-shadow: 0 0 10px 5px white;
+  box-shadow: 0 0 0.6rem 0.3rem white;
   cursor: pointer;
 }
 
 button.top-row {
-  font-size: calc(3.5vh * var(--scale-ratio));
+  font-size: 1.6rem;
   background-color: lightgray;
   color: black;
 }
 
 button.operator {
-  font-size: calc(5.5vh * var(--scale-ratio));
+  font-size: 2.5rem;
   background-color: orange;
 }
 
@@ -145,7 +146,7 @@ button:active {
 }
 
 button.operator-active {
-  font-size: calc(6vh * var(--scale-ratio));
+  font-size: 2.5rem;
   background-color: white;
   color: orange;
 }
@@ -153,11 +154,35 @@ button.operator-active {
 .zero {
   grid-column-end: span 2;
   aspect-ratio: auto;
-  border-radius: calc(10vh * var(--scale-ratio));
+  border-radius: 2rem;
   text-align: left;
-  padding-left: calc(3vh * var(--scale-ratio));
+  padding-left: 1.4rem;
 }
 
 #minus {
-  padding-bottom: calc(0.8vh * var(--scale-ratio));
+  padding-bottom: 0.25rem;
+}
+
+@media screen and (min-width: 360px) and (min-height: 580px) {
+  :root {
+    font-size: 12px;
+  }
+}
+
+@media screen and (min-width: 480px) and (min-height: 800px) {
+  :root {
+    font-size: 16px;
+  }
+}
+
+@media screen and (min-width: 600px) and (min-height: 1025px) {
+  :root {
+    font-size: 20px;
+  }
+}
+
+@media screen and (min-width: 768px) and (min-height: 1200px) {
+  :root {
+    font-size: 24px;
+  }
 }
