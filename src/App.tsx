@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import { performCalc, formatDisplay } from './utils/helper-functions'
-import './App.css'
+import './App.scss'
 import iPhone from './images/iPhone-frame.png'
 import tsLogo from './images/icons8-typescript.svg'
 import reactLogo from './images/icons8-react-native.svg'
 import htmlLogo from './images/icons8-html-5.svg'
-import cssLogo from './images/icons8-css3.svg'
+import sassLogo from './images/icons8-sass.svg'
 
 function App() {
   const [liveDisplay, setLiveDisplay] = useState('')
@@ -92,7 +92,7 @@ function App() {
 
   return (
     <div className="App">
-      <img src={iPhone} alt="" />
+      <img src={iPhone} alt="iPhone frame" />
       <div className="calc-container-outer">
         <div className="head-container">
           <h1>React iOS Calculator</h1>
@@ -100,7 +100,7 @@ function App() {
             <img className="logo" src={tsLogo} alt="TypeScript Logo" />
             <img className="logo" src={reactLogo} alt="React Logo" />
             <img className="logo" src={htmlLogo} alt="HTML5 Logo" />
-            <img className="logo" src={cssLogo} alt="CSS Logo" />
+            <img className="logo" src={sassLogo} alt="Sass Logo" />
           </div>
         </div>
         <div className="calc-container">
@@ -198,7 +198,7 @@ function App() {
           >
             +
           </button>
-          <button className="zero" onClick={insertZero} value="0">
+          <button id="zero" onClick={insertZero} value="0">
             0
           </button>
           <button onClick={insertDecimal} value=".">
