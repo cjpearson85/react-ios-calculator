@@ -117,7 +117,7 @@ const Calculator = () => {
       </button>
       <button className="top-row">%</button>
       <button
-        className={operatorActive === ' ÷ ' ? 'operator-active' : 'operator'}
+        className={operatorActive === ' ÷ ' ? 'operator active' : 'operator'}
         onClick={insertOperator}
         value=" ÷ "
       >
@@ -133,7 +133,7 @@ const Calculator = () => {
         9
       </button>
       <button
-        className={operatorActive === ' x ' ? 'operator-active' : 'operator'}
+        className={operatorActive === ' x ' ? 'operator active' : 'operator'}
         onClick={insertOperator}
         value=" x "
       >
@@ -150,7 +150,7 @@ const Calculator = () => {
       </button>
       <button
         id="minus"
-        className={operatorActive === ' - ' ? 'operator-active' : 'operator'}
+        className={operatorActive === ' - ' ? 'operator active' : 'operator'}
         onClick={insertOperator}
         value=" - "
       >
@@ -166,7 +166,7 @@ const Calculator = () => {
         3
       </button>
       <button
-        className={operatorActive === ' + ' ? 'operator-active' : 'operator'}
+        className={operatorActive === ' + ' ? 'operator active' : 'operator'}
         onClick={insertOperator}
         value=" + "
       >
