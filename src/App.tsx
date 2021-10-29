@@ -1,6 +1,11 @@
 import { useState } from 'react'
 import { performCalc, formatDisplay } from './utils/helper-functions'
 import './App.css'
+import iPhone from './images/iPhone-frame.png'
+import tsLogo from './images/icons8-typescript.svg'
+import reactLogo from './images/icons8-react-native.svg'
+import htmlLogo from './images/icons8-html-5.svg'
+import cssLogo from './images/icons8-css3.svg'
 
 function App() {
   const [liveDisplay, setLiveDisplay] = useState('')
@@ -87,7 +92,17 @@ function App() {
 
   return (
     <div className="App">
+      <img src={iPhone} alt="" />
       <div className="calc-container-outer">
+        <div className="head-container">
+          <h1>React iOS Calculator</h1>
+          <div className="logo-container">
+            <img className="logo" src={tsLogo} alt="TypeScript Logo" />
+            <img className="logo" src={reactLogo} alt="React Logo" />
+            <img className="logo" src={htmlLogo} alt="HTML5 Logo" />
+            <img className="logo" src={cssLogo} alt="CSS Logo" />
+          </div>
+        </div>
         <div className="calc-container">
           <div className="display">
             <p
@@ -192,6 +207,12 @@ function App() {
           <button className="operator" onClick={finishCalc} value="=">
             =
           </button>
+        </div>
+        <div className="foot-container">
+          <h2>by CJ Pearson</h2>
+          <a href="https://github.com/cjpearson85/react-ios-calculator">
+            Github
+          </a>
         </div>
       </div>
     </div>

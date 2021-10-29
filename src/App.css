@@ -1,5 +1,5 @@
 :root {
-  --scale-ratio: 1;
+  --scale-ratio: 0.68;
 }
 
 * {
@@ -10,24 +10,73 @@
 }
 
 .App {
+  background-color: rgb(73, 73, 73);
   width: 100vw;
   height: 100vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: white;
+}
+
+.head-container, .foot-container {
+  text-align: center;
+  z-index: 2;
+}
+
+h1, h2 {
+  color: white;
+  font-size: calc(3vh * var(--scale-ratio));
+}
+
+h2 {
+  font-size: calc(2.5vh * var(--scale-ratio));
+  font-style: italic;
+  margin-bottom: calc(0.5vh * var(--scale-ratio));
+}
+
+a {
+  color: white;
+  font-size: calc(2.5vh * var(--scale-ratio));
+}
+
+.logo-container {
+  margin-top: calc(1.5vh * var(--scale-ratio));
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.logo {
+  height: calc(6vh * var(--scale-ratio));
+  width: auto;
+}
+
+.App > img {
+  position: absolute;
+  height: 76%;
+  filter: drop-shadow(0 0 10vh white);
 }
 
 .calc-container-outer {
+  padding: calc(2vh * var(--scale-ratio)) 0;
+  position: relative;
+  bottom: calc(3vh * var(--scale-ratio));
+  right: calc(0.7vh * var(--scale-ratio));
+  border-radius: calc(4.8vh * var(--scale-ratio));
   aspect-ratio: 9 / 19.5;
-  height: 100%;
+  height: 68%;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-around;
   align-items: center;
   background-color: black;
+  border: 1px solid rgba(255, 255, 255, 0.205)
 }
 
 .calc-container {
+  position: relative;
+  bottom: calc(2vh * var(--scale-ratio));
   aspect-ratio: 9 / 16;
   width: 100%;
   background-color: black;
@@ -77,6 +126,7 @@ button {
 
 button:hover {
   box-shadow: 0 0 10px 5px white;
+  cursor: pointer;
 }
 
 button.top-row {
@@ -110,34 +160,4 @@ button.operator-active {
 
 #minus {
   padding-bottom: calc(0.8vh * var(--scale-ratio));
-}
-
-@media only screen and (orientation: landscape), screen and (min-width: 480px) {
-  :root {
-    --scale-ratio: 0.75;
-  }
-
-  .App {
-    background-image: url('./images/iPhone-frame.png');
-    background-size: 50vh;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-color: rgb(73, 73, 73);
-  }
-
-  .calc-container-outer {
-    height: 75%;
-    position: relative;
-    bottom: 2.5vh;
-    right: 0.5vh;
-    border-radius: 4vh;
-  }
-}
-
-@media only screen and (max-aspect-ratio: 9/16) {
-  .calc-container-outer {
-    width: 100%;
-    height: auto;
-    position: fixed;
-  }
 }
