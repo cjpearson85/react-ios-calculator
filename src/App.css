@@ -1,3 +1,7 @@
+:root {
+  --scale-ratio: 1;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -14,15 +18,24 @@
   background-color: white;
 }
 
+.calc-container-outer {
+  aspect-ratio: 9 / 19.5;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+}
+
 .calc-container {
   aspect-ratio: 9 / 16;
-  height: 100%;
+  width: 100%;
   background-color: black;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: 1fr auto auto auto auto auto;
-  grid-gap: 2vh;
-  padding: 3vh;
+  grid-gap: calc(2vh * var(--scale-ratio));
+  padding: calc(3vh * var(--scale-ratio));
 }
 
 .display {
@@ -33,28 +46,47 @@
 }
 
 .display p {
-  margin: 1vh;
+  margin: calc(1vh * var(--scale-ratio));
   color: white;
-  font-size: 8vh;
+}
+
+.small {
+  font-size: calc(5.6vh * var(--scale-ratio));
+}
+
+.medium {
+  font-size: calc(6.4vh * var(--scale-ratio));
+}
+
+.large {
+  font-size: calc(7.2vh * var(--scale-ratio));
+}
+
+.x-large {
+  font-size: calc(8vh * var(--scale-ratio));
 }
 
 button {
   aspect-ratio: 1 / 1;
-  font-size: 5vh;
+  font-size: calc(4.5vh * var(--scale-ratio));
   background-color: gray;
   border: none;
   color: white;
   border-radius: 50%;
 }
 
+button:hover {
+  box-shadow: 0 0 10px 5px white;
+}
+
 button.top-row {
-  font-size: 4vh;
+  font-size: calc(3.5vh * var(--scale-ratio));
   background-color: lightgray;
   color: black;
 }
 
 button.operator {
-  font-size: 6vh;
+  font-size: calc(5.5vh * var(--scale-ratio));
   background-color: orange;
 }
 
@@ -63,7 +95,7 @@ button:active {
 }
 
 button.operator-active {
-  font-size: 6vh;
+  font-size: calc(6vh * var(--scale-ratio));
   background-color: white;
   color: orange;
 }
@@ -71,18 +103,41 @@ button.operator-active {
 .zero {
   grid-column-end: span 2;
   aspect-ratio: auto;
-  border-radius: 10vh;
+  border-radius: calc(10vh * var(--scale-ratio));
   text-align: left;
-  padding-left: 4vh;
+  padding-left: calc(3vh * var(--scale-ratio));
 }
 
 #minus {
-  padding-bottom: 0.8vh;
+  padding-bottom: calc(0.8vh * var(--scale-ratio));
 }
 
-@media (max-aspect-ratio: 9/16) {
-  .calc-container {
+@media only screen and (orientation: landscape), screen and (min-width: 480px) {
+  :root {
+    --scale-ratio: 0.75;
+  }
+
+  .App {
+    background-image: url('./images/iPhone-frame.png');
+    background-size: 50vh;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: rgb(73, 73, 73);
+  }
+
+  .calc-container-outer {
+    height: 75%;
+    position: relative;
+    bottom: 2.5vh;
+    right: 0.5vh;
+    border-radius: 4vh;
+  }
+}
+
+@media only screen and (max-aspect-ratio: 9/16) {
+  .calc-container-outer {
     width: 100%;
     height: auto;
+    position: fixed;
   }
 }

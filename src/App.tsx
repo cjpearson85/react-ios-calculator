@@ -87,92 +87,112 @@ function App() {
 
   return (
     <div className="App">
-      <div className="calc-container">
-        <div className="display">
-          <p>
-            {liveDisplay === ''
-              ? '0'
-              : liveDisplay === '-'
-              ? '-0'
-              : formatDisplay(liveDisplay)}
-          </p>
+      <div className="calc-container-outer">
+        <div className="calc-container">
+          <div className="display">
+            <p
+              className={
+                liveDisplay.length >= 9
+                  ? 'small'
+                  : liveDisplay.length === 8
+                  ? 'medium'
+                  : liveDisplay.length === 7
+                  ? 'large'
+                  : 'x-large'
+              }
+            >
+              {liveDisplay === ''
+                ? '0'
+                : liveDisplay === '-'
+                ? '-0'
+                : formatDisplay(liveDisplay)}
+            </p>
+          </div>
+          <button
+            className="top-row"
+            onClick={clearDisplay}
+            value={allClear ? 'AC' : 'C'}
+          >
+            {allClear ? 'AC' : 'C'}
+          </button>
+          <button className="top-row" onClick={plusMinusToggle} value="-">
+            +/-
+          </button>
+          <button className="top-row">%</button>
+          <button
+            className={
+              operatorActive === ' ÷ ' ? 'operator-active' : 'operator'
+            }
+            onClick={insertOperator}
+            value=" ÷ "
+          >
+            ÷
+          </button>
+          <button onClick={insertNum} value="7">
+            7
+          </button>
+          <button onClick={insertNum} value="8">
+            8
+          </button>
+          <button onClick={insertNum} value="9">
+            9
+          </button>
+          <button
+            className={
+              operatorActive === ' x ' ? 'operator-active' : 'operator'
+            }
+            onClick={insertOperator}
+            value=" x "
+          >
+            ×
+          </button>
+          <button onClick={insertNum} value="4">
+            4
+          </button>
+          <button onClick={insertNum} value="5">
+            5
+          </button>
+          <button onClick={insertNum} value="6">
+            6
+          </button>
+          <button
+            id="minus"
+            className={
+              operatorActive === ' - ' ? 'operator-active' : 'operator'
+            }
+            onClick={insertOperator}
+            value=" - "
+          >
+            -
+          </button>
+          <button onClick={insertNum} value="1">
+            1
+          </button>
+          <button onClick={insertNum} value="2">
+            2
+          </button>
+          <button onClick={insertNum} value="3">
+            3
+          </button>
+          <button
+            className={
+              operatorActive === ' + ' ? 'operator-active' : 'operator'
+            }
+            onClick={insertOperator}
+            value=" + "
+          >
+            +
+          </button>
+          <button className="zero" onClick={insertZero} value="0">
+            0
+          </button>
+          <button onClick={insertDecimal} value=".">
+            .
+          </button>
+          <button className="operator" onClick={finishCalc} value="=">
+            =
+          </button>
         </div>
-        <button
-          className="top-row"
-          onClick={clearDisplay}
-          value={allClear ? 'AC' : 'C'}
-        >
-          {allClear ? 'AC' : 'C'}
-        </button>
-        <button className="top-row" onClick={plusMinusToggle} value="-">
-          +/-
-        </button>
-        <button className="top-row">%</button>
-        <button
-          className={operatorActive === ' ÷ ' ? 'operator-active' : 'operator'}
-          onClick={insertOperator}
-          value=" ÷ "
-        >
-          ÷
-        </button>
-        <button onClick={insertNum} value="7">
-          7
-        </button>
-        <button onClick={insertNum} value="8">
-          8
-        </button>
-        <button onClick={insertNum} value="9">
-          9
-        </button>
-        <button
-          className={operatorActive === ' x ' ? 'operator-active' : 'operator'}
-          onClick={insertOperator}
-          value=" x "
-        >
-          ×
-        </button>
-        <button onClick={insertNum} value="4">
-          4
-        </button>
-        <button onClick={insertNum} value="5">
-          5
-        </button>
-        <button onClick={insertNum} value="6">
-          6
-        </button>
-        <button
-          id="minus"
-          className={operatorActive === ' - ' ? 'operator-active' : 'operator'}
-          onClick={insertOperator}
-          value=" - "
-        >
-          -
-        </button>
-        <button onClick={insertNum} value="1">
-          1
-        </button>
-        <button onClick={insertNum} value="2">
-          2
-        </button>
-        <button onClick={insertNum} value="3">
-          3
-        </button>
-        <button
-          className={operatorActive === ' + ' ? 'operator-active' : 'operator'}
-          onClick={insertOperator}
-          value=" + "
-        >
-          +
-        </button>
-        <button className="zero" onClick={insertZero} value="0">
-          0
-        </button>
-        <button onClick={insertDecimal} value=".">
-          .
-        </button>
-        <button className="operator" onClick={finishCalc} value="=">
-          =
-        </button>
       </div>
     </div>
   )
