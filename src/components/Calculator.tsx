@@ -9,11 +9,17 @@ const Calculator = () => {
   const [allClear, setAllClear] = useState(true)
 
   const insertOperator = (event: any) => {
-    setOperatorActive(event.target.value)
-
-    if (liveDisplay !== '') {
+    if (operatorActive === '') {
+      setOperatorActive(event.target.value)
+      if (liveDisplay !== '') {
+        setFormulaDisplay((currentFormula) => {
+          return currentFormula + liveDisplay + event.target.value
+        })
+      }
+    } else {
+      setOperatorActive(event.target.value)
       setFormulaDisplay((currentFormula) => {
-        return currentFormula + liveDisplay + event.target.value
+        return currentFormula.slice(0, -3) + event.target.value
       })
     }
   }
@@ -79,7 +85,10 @@ const Calculator = () => {
   }
 
   const clearDisplay = (event: any) => {
-    if (event.target.value === 'AC') setFormulaDisplay('')
+    if (event.target.value === 'AC') {
+      setFormulaDisplay('')
+      setOperatorActive('')
+    }
     setLiveDisplay('')
     setAllClear(true)
   }
