@@ -32,6 +32,29 @@ const Calculator = () => {
     }
   }
 
+  const percentage = () => {
+    switch (formulaDisplay.charAt(formulaDisplay.length - 2)) {
+      case '+':
+        setLiveDisplay((curr) => {
+          const base: string = formulaDisplay.match(/\d+ /g)?.slice(-1)[0] || ''
+          return `${(+base * +curr) / 100}`
+        })
+        break
+      case '-':
+        setLiveDisplay((curr) => {
+          const base: string = formulaDisplay.match(/\d+ /g)?.slice(-1)[0] || ''
+          return `${(+base * +curr) / 100}`
+        })
+        break
+      case 'x':
+        setLiveDisplay((curr) => `${+curr / 100}`)
+        break
+      case '÷':
+        setLiveDisplay((curr) => `${+curr / 100}`)
+        break
+    }
+  }
+
   const insertNum = (event: any): void => {
     if (operatorActive !== '') {
       setLiveDisplay(event.target.value)
@@ -124,7 +147,9 @@ const Calculator = () => {
       <button className="top-row" onClick={plusMinusToggle} value="-">
         +/-
       </button>
-      <button className="top-row">%</button>
+      <button className="top-row" onClick={percentage}>
+        %
+      </button>
       <button
         className={operatorActive === ' ÷ ' ? 'operator active' : 'operator'}
         onClick={insertOperator}
