@@ -158,7 +158,6 @@ const Calculator = () => {
         6
       </button>
       <button
-        id="minus"
         className={operatorActive === ' - ' ? 'operator active' : 'operator'}
         onClick={insertOperator}
         value=" - "
