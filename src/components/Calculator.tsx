@@ -12,15 +12,31 @@ const Calculator = () => {
     if (operatorActive === '') {
       setOperatorActive(event.target.value)
       if (liveDisplay !== '') {
+        const plusMinus = ['+', '-']
+        const timesDivide = ['x', '÷']
+        if (
+          plusMinus.includes(event.target.value[1]) ||
+          (timesDivide.includes(
+            formulaDisplay.charAt(formulaDisplay.length - 2)
+          ) &&
+            timesDivide.includes(event.target.value[1]))
+        ) {
+          const result = performCalc(formulaDisplay + liveDisplay)
+          setFormulaDisplay(() => {
+            return result + event.target.value
+          })
+          setLiveDisplay(result)
+        } else {
+          setFormulaDisplay((currentFormula) => {
+            return currentFormula + liveDisplay + event.target.value
+          })
+        }
+      } else {
+        setOperatorActive(event.target.value)
         setFormulaDisplay((currentFormula) => {
-          return currentFormula + liveDisplay + event.target.value
+          return currentFormula.slice(0, -3) + event.target.value
         })
       }
-    } else {
-      setOperatorActive(event.target.value)
-      setFormulaDisplay((currentFormula) => {
-        return currentFormula.slice(0, -3) + event.target.value
-      })
     }
   }
 
